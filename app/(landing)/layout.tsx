@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function DashboardPage({
+export default function LandingPageLayout({
     children,
 }: React.ComponentPropsWithoutRef<"main">) {
-    return <main className="h-full bg-blue-900">{children}</main>;
+    return <main className="h-full bg-slate-200">{children}</main>;
 }
