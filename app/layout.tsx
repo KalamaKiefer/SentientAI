@@ -4,6 +4,7 @@ import { Ysabeau, Noto_Sans_HK } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import clsx from "clsx";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const ysabeau = Ysabeau({
     variable: "--font-ysa",
@@ -34,9 +35,16 @@ export default function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
-                <body className={clsx(ysabeau.variable, noto.variable)}>
+                <body
+                    className={clsx(
+                        ysabeau.variable,
+                        noto.variable,
+                        "flex flex-col h-screen justify-between"
+                    )}
+                >
                     <Header />
-                    {children}
+                    <main className="mb-auto">{children}</main>
+                    <Footer />
                 </body>
             </html>
         </ClerkProvider>

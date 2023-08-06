@@ -58,7 +58,11 @@ module.exports = {
 
         extend: {
             maxWidth: {
-                max: "1440px",
+                max: "1640px",
+            },
+            colors: {
+                matteBlack: "#171717",
+                creme: "#FEFBEA",
             },
         },
     },

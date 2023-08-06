@@ -9,6 +9,7 @@ import {
     VideoCamera,
     Images,
     MusicNote,
+    Gear,
     type Icon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -17,28 +18,50 @@ import React from "react";
 import mobileLogo from "../public/assets/mobileLogo.png";
 import { motion, type AnimationProps, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
+import Link from "next/link";
 
 const navigation: Array<{
     name: string;
     href: string;
     icon: Icon;
+    hoverColor: string;
     color: string;
 }> = [
-    { name: "Chat", href: "#", icon: Chat, color: "text-red-400" },
-    { name: "Image", href: "#", icon: Images, color: "text-blue-400" },
-    { name: "Video", href: "#", icon: VideoCamera, color: "text-green-400" },
-    { name: "Music", href: "#", icon: MusicNote, color: "text-orange-400" },
+    {
+        name: "Chat",
+        href: "/chat",
+        icon: Chat,
+        hoverColor: "group-hover:text-sky-900",
+        color: "text-blue-900",
+    },
+    {
+        name: "Image",
+        href: "/image-generation",
+        icon: Images,
+        hoverColor: "group-hover:text-pink-800",
+        color: "text-pink-800",
+    },
+    {
+        name: "Video",
+        href: "/video-generation",
+        icon: VideoCamera,
+        hoverColor: "group-hover:text-green-800",
+        color: "text-green-800",
+    },
+    {
+        name: "Music",
+        href: "/music-generation",
+        icon: MusicNote,
+        hoverColor: "group-hover:text-purple-800",
+        color: "text-purple-800",
+    },
 ];
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-    const isLandingPage = usePathname();
+    const pathname = usePathname();
 
-    if (
-        isLandingPage === "/" ||
-        isLandingPage === "/sign-up" ||
-        isLandingPage === "sign-in"
-    )
+    if (pathname === "/" || pathname === "/sign-up" || pathname === "sign-in")
         return;
 
     return (
@@ -48,7 +71,7 @@ export default function Header() {
                 aria-label="Global"
             >
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5 flex items-center">
+                    <a href="/" className="-m-1.5 p-1.5 flex items-center">
                         <span className="sr-only">SentientAI</span>
                         <Image
                             src={mobileLogo}
@@ -75,20 +98,29 @@ export default function Header() {
                     {navigation.map((item) => {
                         const Icon = item.icon;
                         return (
-                            <div key={item.name} className="flex items-center">
-                                <a
-                                    href={item.href}
-                                    className="font-noto text-20"
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className={clsx(
+                                    "flex items-center justify-center group cursor-pointer "
+                                )}
+                            >
+                                <p
+                                    className={clsx(
+                                        "font-noto text-16 xl:text-20 duration-300 ease-in-out",
+                                        pathname === item.href && item.color,
+                                        item.hoverColor
+                                    )}
                                 >
                                     {item.name}
-                                </a>
+                                </p>
                                 <Icon
                                     className={clsx(
-                                        "w-6 h-6 ml-2 -mb-1",
-                                        item.color
+                                        "w-5 h-5 -mb-1 xl:mb-0 xl:w-7 xl:h-7 ml-2 text-black pointer-events-none duration-300 ease-in-out",
+                                        item.hoverColor
                                     )}
                                 />
-                            </div>
+                            </Link>
                         );
                     })}
                 </div>
@@ -98,10 +130,14 @@ export default function Header() {
                         appearance={{
                             elements: {
                                 userButtonAvatarImage: "w-full h-full",
-                                userButtonAvatarBox: "w-[45px] h-auto",
+                                userButtonAvatarBox:
+                                    "w-[38px] xl:w-[45px] h-auto",
                             },
                         }}
                     />
+                    <Link href="/settings">
+                        <Gear className="w-10 h-10 xl:w-12 xl:h-12 ml-5 text-gray-600 opacity-50 hover:opacity-100 duration-300 ease-in-out" />
+                    </Link>
                 </div>
             </nav>
             <Dialog
@@ -138,23 +174,59 @@ export default function Header() {
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 <span className="sr-only">Close menu</span>
-                                <X className="h-6 w-6" aria-hidden="true" />
+                                <motion.div
+                                    initial={{ rotate: 0 }}
+                                    animate={{
+                                        rotate: 45,
+                                        y: 0.5,
+                                    }}
+                                    transition={{
+                                        ease: "easeInOut",
+                                        duration: 0.5,
+                                    }}
+                                    className="h-0.5 w-4 bg-black mb-2"
+                                />
+                                <motion.div
+                                    initial={{ rotate: 0 }}
+                                    animate={{ rotate: -45, y: -9 }}
+                                    transition={{
+                                        ease: "easeInOut",
+                                        duration: 0.5,
+                                    }}
+                                    className="h-0.5 w-4 bg-black"
+                                />
                             </button>
                         </div>
                         <div className="mt-6 flow-root">
                             <div className="-my-6 divide-y divide-gray-500">
-                                <div className="space-y-2 py-6">
-                                    {navigation.map((item) => (
-                                        <a
-                                            key={item.name}
-                                            href={item.href}
-                                            className="-mx-3 block rounded-lg px-3 py-2 font-noto text-18 font-semibold hover:bg-gray-50"
-                                        >
-                                            {item.name}
-                                        </a>
-                                    ))}
+                                <div className="space-y-4 py-6">
+                                    {navigation.map((item) => {
+                                        const Icon = item.icon;
+                                        return (
+                                            <div
+                                                key={item.name}
+                                                className="flex group cursor-pointer items-center"
+                                            >
+                                                <a
+                                                    href={item.href}
+                                                    className={clsx(
+                                                        "font-noto text-20 duration-300 ease-in-out",
+                                                        item.hoverColor
+                                                    )}
+                                                >
+                                                    {item.name}
+                                                </a>
+                                                <Icon
+                                                    className={clsx(
+                                                        "w-6 h-6 ml-2.5 -mb-1 text-black pointer-events-none duration-300 ease-in-out",
+                                                        item.hoverColor
+                                                    )}
+                                                />
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                                <div className="py-6">
+                                <div className="py-6 flex gap-x-3 items-center">
                                     <UserButton
                                         afterSignOutUrl="/"
                                         appearance={{
@@ -166,6 +238,9 @@ export default function Header() {
                                             },
                                         }}
                                     />
+                                    <Link href="/settings">
+                                        <Gear className="w-11 h-11 text-gray-600" />
+                                    </Link>
                                 </div>
                             </div>
                         </div>

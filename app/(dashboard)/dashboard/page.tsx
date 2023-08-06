@@ -1,5 +1,14 @@
 import React from "react";
 
 export default function DashboardPage() {
-    return <div>hello dashboard</div>;
+    return (
+        <section>
+            <div>
+                <p>chat</p>
+                <p>chat</p>
+                <p>chat</p>
+                <p>chat</p>
+            </div>
+        </section>
+    );
 }
