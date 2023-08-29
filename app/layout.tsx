@@ -43,7 +43,7 @@ export default function RootLayout({
                     )}
                 >
                     <Header />
-                    <main className="mb-auto">{children}</main>
+                    <main className="my-auto">{children}</main>
                     <Footer />
                 </body>
             </html>

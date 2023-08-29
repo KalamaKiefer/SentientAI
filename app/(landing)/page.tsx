@@ -1,6 +1,7 @@
 import { LandingHero } from "@/components/LandingHero";
 import { LandingNav } from "@/components/LandingNav";
 import LandingPromotion from "@/components/LandingPromotion";
+import { PricingInfo } from "@/components/PricingInfo";
 import React from "react";
 
 export default function LandingPage() {
@@ -9,6 +10,7 @@ export default function LandingPage() {
             <LandingNav />
             <LandingHero />
             <LandingPromotion />
+            <PricingInfo />
         </div>
     );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, type AnimationProps, AnimatePresence } from "framer-motion";
 import React from "react";
 import {
     Chat,
@@ -47,7 +48,16 @@ const LandingPromotion = () => {
     return (
         <BoundedBox className="py-24 sm:py-32 bg-matteBlack">
             <div className="px-6 lg:px-8">
-                <div className="mx-auto max-w-2xl lg:text-center">
+                <motion.div
+                    className="mx-auto max-w-2xl lg:text-center"
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{
+                        type: "spring",
+                        duration: 1.5,
+                        delay: 0.4,
+                    }}
+                >
                     <h2 className="text-base font-noto font-semibold leading-7 text-white">
                         Create Anything
                     </h2>
@@ -62,11 +72,21 @@ const LandingPromotion = () => {
                         composition. Unleash your imagination and redefine
                         possibilities with Sentient AI.
                     </p>
-                </div>
+                </motion.div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
                     <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
                         {features.map((feature) => (
-                            <div key={feature.name} className="relative pl-16">
+                            <motion.div
+                                key={feature.name}
+                                className="relative pl-16"
+                                initial={{ y: -50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{
+                                    type: "spring",
+                                    duration: 1.5,
+                                    delay: 0.4,
+                                }}
+                            >
                                 <dt className="text-base font-semibold leading-7 text-creme font-noto">
                                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-creme">
                                         <feature.icon
@@ -79,7 +99,7 @@ const LandingPromotion = () => {
                                 <dd className="mt-2 text-base leading-7 text-creme brightness-75">
                                     {feature.description}
                                 </dd>
-                            </div>
+                            </motion.div>
                         ))}
                     </dl>
                 </div>

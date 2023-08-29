@@ -182,18 +182,18 @@ export default function Header() {
                                     }}
                                     transition={{
                                         ease: "easeInOut",
-                                        duration: 0.5,
+                                        duration: 0.7,
                                     }}
-                                    className="h-0.5 w-4 bg-black mb-2"
+                                    className="h-0.5 w-6 bg-black mb-2"
                                 />
                                 <motion.div
                                     initial={{ rotate: 0 }}
                                     animate={{ rotate: -45, y: -9 }}
                                     transition={{
                                         ease: "easeInOut",
-                                        duration: 0.5,
+                                        duration: 0.7,
                                     }}
-                                    className="h-0.5 w-4 bg-black"
+                                    className="h-0.5 w-6 bg-black"
                                 />
                             </button>
                         </div>

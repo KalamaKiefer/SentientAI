@@ -1,7 +1,12 @@
 "use client";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Footer = () => {
+    const pathname = usePathname();
+
+    if (pathname === "/sign-up" || pathname === "sign-in") return;
+
     const footerNav = {
         main: [
             { name: "Dashboard", href: "/dashboard" },
