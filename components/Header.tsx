@@ -117,6 +117,7 @@ export default function Header() {
                                 <Icon
                                     className={clsx(
                                         "w-5 h-5 -mb-1 xl:mb-0 xl:w-7 xl:h-7 ml-2 text-black pointer-events-none duration-300 ease-in-out",
+                                        pathname === item.href && item.color,
                                         item.hoverColor
                                     )}
                                 />

@@ -16,23 +16,21 @@ interface LinkProps {
 
 export const QuickLinks = () => {
     const quickLinks: Array<LinkProps> = [
-        { title: "Chat", link: "", icon: Chat },
+        { title: "Chat", link: "/chat", icon: Chat },
         { title: "Image", link: "", icon: Images },
         { title: "Video", link: "", icon: VideoCamera },
         { title: "Music", link: "", icon: MusicNote },
     ];
 
     return (
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col lg:flex-row gap-10 justify-center">
             {quickLinks.map((link) => {
                 return (
-                    <Link
-                        href={link.link}
-                        className="border p-5 rounded-2xl flex items-center gap-5"
-                        key={link.title}
-                    >
-                        <link.icon className="w-8 h-8" />
-                        <h5 className="font-ysa text-18">{link.title}</h5>
+                    <Link href={link.link} key={link.title}>
+                        <div className="border p-5 rounded-2xl flex items-center gap-5 shadow-sm hover:shadow-2xl ease-in-out transition duration-500 md:px-4 lg:w-[200px] xl:w-[250px]">
+                            <link.icon className="w-8 h-8" />
+                            <h5 className="font-ysa text-18">{link.title}</h5>
+                        </div>
                     </Link>
                 );
             })}

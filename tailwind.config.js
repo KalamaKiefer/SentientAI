@@ -64,7 +64,46 @@ module.exports = {
                 matteBlack: "#171717",
                 creme: "#FEFBEA",
             },
+            keyframes: {
+                "circle-left": {
+                    "0%, 100%": {
+                        transform: "translateX(0px)scale(1)",
+                    },
+                    "50%": {
+                        transform: "translateX(-30px)scale(2)",
+                    },
+                    "70%": {
+                        transform: "translateX(30px)scale(2)",
+                    },
+                },
+                "circle-right": {
+                    "0%, 100%": {
+                        transform: "translateX(0px)scale(1)",
+                    },
+                    "50%": {
+                        transform: "translateX(30px)scale(2)",
+                    },
+                    "70%": {
+                        transform: "translateX(-30px)scale(2)",
+                    },
+                },
+                "three-bounce": {
+                    "0%, 100%": {
+                        transform: "scale(0.5)",
+                        opacity: 0.5,
+                    },
+                    "50%": {
+                        transform: "scale(2)",
+                        opacity: 1,
+                    },
+                },
+            },
+            animation: {
+                "circle-left": "circle-left 2s ease-in-out infinite",
+                "circle-right": "circle-right 2s ease-in-out infinite",
+                "three-bounce": "three-bounce 1.5s ease-in-out infinite",
+            },
         },
     },
-    plugins: [],
+    plugins: [require("tailwindcss-animation-delay")],
 };

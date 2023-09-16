@@ -5,7 +5,7 @@ import React from "react";
 
 export default function DashboardPage() {
     return (
-        <BoundedBox className="!max-w-2xl">
+        <BoundedBox className="!max-w-2xl h-[100vh]">
             <QuickLinks />
         </BoundedBox>
     );

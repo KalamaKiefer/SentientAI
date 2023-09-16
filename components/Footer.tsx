@@ -5,7 +5,8 @@ import React from "react";
 const Footer = () => {
     const pathname = usePathname();
 
-    if (pathname === "/sign-up" || pathname === "sign-in") return;
+    if (pathname === "/sign-up" || pathname === "sign-in" || pathname === "/")
+        return;
 
     const footerNav = {
         main: [
