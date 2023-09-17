@@ -14,6 +14,7 @@ import OpenAI from "openai";
 import React from "react";
 import { ThreeDotsBounce } from "@/components/ThreeDotsBounce";
 import { Loader } from "@/components/Loader";
+import { MessageContainer } from "@/components/MessageContainer";
 
 export default function ChatPage() {
     const router = useRouter();
@@ -61,18 +62,35 @@ export default function ChatPage() {
                     Chat With SentientAI
                 </p>
             </div>
-            <div className="mt-20">
-                {messages.length === 0 && !isLoading && (
-                    <div className="flex flex-col items-center justify-center gap-5">
-                        <p className="font-noto text-20 font-semibold tracking-wide text-matteBlack">
-                            Start a Conversation
-                        </p>
-                        <ThreeDotsBounce />
+            <div className="mt-20 overflow-y-scroll">
+                {messages.length === 0 && (
+                    <div className="flex flex-col items-center justify-center gap-5 pb-4">
+                        {messages.length === 0 && !isLoading ? (
+                            <>
+                                <p className="font-noto text-20 font-semibold tracking-wide text-matteBlack">
+                                    Start a Conversation
+                                </p>
+                                <ThreeDotsBounce />
+                            </>
+                        ) : (
+                            isLoading && (
+                                <>
+                                    <p className="font-noto text-14 lg:text-20 font-semibold tracking-wide text-matteBlack">
+                                        SentientAI Is Formulating a Response
+                                    </p>
+                                    <Loader />
+                                </>
+                            )
+                        )}
                     </div>
                 )}
-                <div className="flex flex-col-reverse gap-y-4">
+                <div className="flex flex-col gap-y-4">
                     {messages.map((message) => (
-                        <div key={message.content}>{message.content}</div>
+                        <MessageContainer
+                            key={message.content}
+                            message={message.content}
+                            role={message.role}
+                        />
                     ))}
                 </div>
             </div>

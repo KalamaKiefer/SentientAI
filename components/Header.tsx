@@ -61,7 +61,11 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const pathname = usePathname();
 
-    if (pathname === "/" || pathname === "/sign-up" || pathname === "sign-in")
+    if (
+        pathname === "/" ||
+        pathname.includes("sign-up") ||
+        pathname.includes("sign-in")
+    )
         return;
 
     return (
