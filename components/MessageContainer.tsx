@@ -31,7 +31,7 @@ export const MessageContainer = ({ message, role }: MessageContainerData) => {
             )}
             <p
                 className={clsx(
-                    "text-matteBlack text-14 lg:text-18",
+                    "text-matteBlack text-16 lg:text-18",
                     role === "user"
                         ? "font-bold font-ysa"
                         : "mt-4 font-noto leading-relaxed"

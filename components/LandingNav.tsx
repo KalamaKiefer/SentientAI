@@ -48,9 +48,9 @@ export const LandingNav = () => {
                     </Link>
                 </div>
             ) : (
-                <Link href="/sign-up" className="hidden md:block">
+                <Link href="/sign-in" className="hidden md:block">
                     <button className="border border-creme text-creme hover:bg-creme hover:text-matteBlack duration-200 ease-in-out py-1.5 px-7 text-18 rounded-xl font-ysa">
-                        Get Started
+                        Login
                     </button>
                 </Link>
             )}
