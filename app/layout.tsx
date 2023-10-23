@@ -42,7 +42,7 @@ export default function RootLayout({
                         "flex flex-col h-screen justify-between"
                     )}
                 >
-                    <Header />
+                    <Header className="bg-transparent" />
                     <main className="mb-auto h-full min-h-[85vh]">
                         {children}
                     </main>

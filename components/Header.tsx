@@ -57,7 +57,9 @@ const navigation: Array<{
     },
 ];
 
-export default function Header() {
+export default function Header(
+    props: React.ComponentPropsWithoutRef<"header">
+) {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const pathname = usePathname();
 
@@ -69,13 +71,16 @@ export default function Header() {
         return;
 
     return (
-        <header className="bg-transparent">
+        <header {...props}>
             <nav
                 className="mx-auto flex max-w-max items-center justify-between p-6 lg:px-8"
                 aria-label="Global"
             >
                 <div className="flex lg:flex-1">
-                    <a href="/" className="-m-1.5 p-1.5 flex items-center">
+                    <a
+                        href="/dashboard"
+                        className="-m-1.5 p-1.5 flex items-center"
+                    >
                         <span className="sr-only">SentientAI</span>
                         <Image
                             src={mobileLogo}

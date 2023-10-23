@@ -56,7 +56,7 @@ const LandingPromotion = () => {
                         transition={{
                             type: "spring",
                             duration: 1.5,
-                            delay: 0.4,
+                            delay: 0.7,
                         }}
                     >
                         <h2 className="text-base font-noto font-semibold leading-7 text-white">
@@ -86,7 +86,7 @@ const LandingPromotion = () => {
                                     transition={{
                                         type: "spring",
                                         duration: 1.5,
-                                        delay: 0.4,
+                                        delay: 0.7,
                                     }}
                                 >
                                     <dt className="text-base font-semibold leading-7 text-creme font-noto">

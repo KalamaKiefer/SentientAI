@@ -65,6 +65,33 @@ module.exports = {
                 creme: "#FEFBEA",
             },
             keyframes: {
+                "square-fill": {
+                    "0%, 50%": {
+                        transform: "rotate(-360deg)",
+                    },
+                },
+                "square-fill-in": {
+                    "0%": {
+                        transform: "scaleY(0)",
+                        "transform-origin": "bottom",
+                    },
+                    "50%, 100%": {
+                        transform: "scaleY(1)",
+                        background: "rgb(219, 39, 119)",
+                    },
+                },
+                rotate: {
+                    "0%": {
+                        transform: "rotate(0deg)",
+                    },
+                    "50%": {
+                        transform: "rotateY(-180deg)",
+                    },
+                    "100%": {
+                        transform: "rotate(-180deg)",
+                    },
+                },
+
                 "circle-left": {
                     "0%, 100%": {
                         transform: "translateX(0px)scale(1)",
@@ -118,6 +145,9 @@ module.exports = {
                 "three-bounce": "three-bounce 1.5s ease-in-out infinite",
                 overlayShow: "overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
                 contentShow: "contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+                "square-fill": "square-fill 2s ease-in-out infinite",
+                "square-fill-in": "square-fill-in 2s ease-in-out infinite",
+                rotate: "rotate 1.5s linear infinite",
             },
         },
     },

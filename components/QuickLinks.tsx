@@ -17,9 +17,9 @@ interface LinkProps {
 export const QuickLinks = () => {
     const quickLinks: Array<LinkProps> = [
         { title: "Chat", link: "/chat", icon: Chat },
-        { title: "Image", link: "", icon: Images },
-        { title: "Video", link: "", icon: VideoCamera },
-        { title: "Music", link: "", icon: MusicNote },
+        { title: "Image", link: "/image-generation", icon: Images },
+        { title: "Video", link: "/video-generation", icon: VideoCamera },
+        { title: "Music", link: "/music-generation", icon: MusicNote },
     ];
 
     return (
