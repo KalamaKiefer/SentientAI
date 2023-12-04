@@ -10,18 +10,14 @@ import { Form, FormControl, FormField, FormItem } from "@/components/Form";
 import { Input } from "@/components/Input";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import OpenAI from "openai";
-import React from "react";
-import { ThreeDotsBounce } from "@/components/animations/ThreeDotsBounce";
-import { MessageContainer } from "@/components/MessageContainer";
-import { Loader } from "@/components/animations/Loader";
 
-export default function ChatPage() {
+import React from "react";
+import { Loader } from "@/components/animations/Loader";
+import Arrow from "@/components/animations/Arrow";
+
+export default function VideoPage() {
     const router = useRouter();
-    const [messages, setMessages] = React.useState<
-        OpenAI.Chat.Completions.ChatCompletionMessageParam[]
-    >([]);
-    const scrollRef = React.useRef<HTMLDivElement>(null);
+    const [video, setVideo] = React.useState<string>();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -34,32 +30,16 @@ export default function ChatPage() {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const userMessage: OpenAI.Chat.Completions.ChatCompletionMessageParam =
-                {
-                    role: "user",
-                    content: values.prompt,
-                };
+            setVideo(undefined);
 
-            const newMessages = [...messages, userMessage];
+            const response = await axios.post("/api/video", values);
 
-            const response = await axios.post("/api/chat", {
-                messages: newMessages,
-            });
-            setMessages((current) => [...current, userMessage, response.data]);
-
+            setVideo(response.data[0]);
             form.reset();
         } catch (error) {
             console.log(error);
         } finally {
             router.refresh();
-        }
-
-        if (scrollRef.current) {
-            console.log("hello");
-            scrollRef.current.scrollIntoView({
-                block: "end",
-                behavior: "smooth",
-            });
         }
     };
 
@@ -68,35 +48,31 @@ export default function ChatPage() {
             <div className="flex items-center gap-3">
                 <VideoCamera className="w-10 h-10" />
                 <p className="font-ysa font-semibold text-24">
-                    Chat With SentientAI
+                    Video Generation
                 </p>
             </div>
-            <div
-                className="mt-20 overflow-y-scroll scrollbar-hide"
-                ref={scrollRef}
-            >
-                {messages.length === 0 && (
-                    <div className="flex flex-col items-center justify-center gap-5 pb-4">
-                        {messages.length === 0 && !isLoading && (
+            <div className="mt-20 overflow-y-scroll scrollbar-hide">
+                {!video && (
+                    <div className="flex flex-col items-center justify-center gap-5 pb-20">
+                        {!video && !isLoading && (
                             <>
                                 <p className="font-noto text-20 font-semibold tracking-wide text-matteBlack">
-                                    Start a Conversation
+                                    Become Tarantino...
                                 </p>
-                                <ThreeDotsBounce />
+                                <Arrow />
                             </>
                         )}
                     </div>
                 )}
                 {isLoading && <Loader />}
-                <div className="flex flex-col gap-y-4">
-                    {messages.map((message) => (
-                        <MessageContainer
-                            key={message.content}
-                            message={message.content}
-                            role={message.role}
-                        />
-                    ))}
-                </div>
+                {video && (
+                    <video
+                        controls
+                        className="w-auto max-h-[430px] aspect-video mt-8 rounded-8 border bg-matteBlack"
+                    >
+                        <source src={video} />
+                    </video>
+                )}
             </div>
 
             <div className="mt-auto mb-5">
@@ -113,7 +89,7 @@ export default function ChatPage() {
                                         <Input
                                             className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2 placeholder:font-noto placeholder:text-14"
                                             disabled={isLoading}
-                                            placeholder="What is 10 times 10?"
+                                            placeholder="Sharks swimming in tanks"
                                             {...field}
                                         />
                                     </FormControl>

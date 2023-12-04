@@ -5,23 +5,19 @@ import { z } from "zod";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BoundedBox } from "@/components/BoundedBox";
-import { VideoCamera } from "@phosphor-icons/react";
+import { MusicNote, VideoCamera } from "@phosphor-icons/react";
 import { Form, FormControl, FormField, FormItem } from "@/components/Form";
 import { Input } from "@/components/Input";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import OpenAI from "openai";
-import React from "react";
-import { ThreeDotsBounce } from "@/components/animations/ThreeDotsBounce";
-import { MessageContainer } from "@/components/MessageContainer";
-import { Loader } from "@/components/animations/Loader";
 
-export default function ChatPage() {
+import React from "react";
+import { Loader } from "@/components/animations/Loader";
+import WaveAnimation from "@/components/animations/Wave";
+
+export default function MusicPage() {
     const router = useRouter();
-    const [messages, setMessages] = React.useState<
-        OpenAI.Chat.Completions.ChatCompletionMessageParam[]
-    >([]);
-    const scrollRef = React.useRef<HTMLDivElement>(null);
+    const [music, setMusic] = React.useState<string>();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -34,69 +30,47 @@ export default function ChatPage() {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const userMessage: OpenAI.Chat.Completions.ChatCompletionMessageParam =
-                {
-                    role: "user",
-                    content: values.prompt,
-                };
+            setMusic(undefined);
 
-            const newMessages = [...messages, userMessage];
+            const response = await axios.post("/api/music", values);
 
-            const response = await axios.post("/api/chat", {
-                messages: newMessages,
-            });
-            setMessages((current) => [...current, userMessage, response.data]);
-
+            setMusic(response.data.audio);
             form.reset();
         } catch (error) {
             console.log(error);
         } finally {
             router.refresh();
         }
-
-        if (scrollRef.current) {
-            console.log("hello");
-            scrollRef.current.scrollIntoView({
-                block: "end",
-                behavior: "smooth",
-            });
-        }
     };
 
     return (
         <BoundedBox yPadding="none" className="pt-10 flex flex-col h-full">
             <div className="flex items-center gap-3">
-                <VideoCamera className="w-10 h-10" />
+                <MusicNote className="w-10 h-10" />
                 <p className="font-ysa font-semibold text-24">
-                    Chat With SentientAI
+                    Music Generation
                 </p>
             </div>
-            <div
-                className="mt-20 overflow-y-scroll scrollbar-hide"
-                ref={scrollRef}
-            >
-                {messages.length === 0 && (
-                    <div className="flex flex-col items-center justify-center gap-5 pb-4">
-                        {messages.length === 0 && !isLoading && (
+            <div className="mt-20 overflow-y-scroll scrollbar-hide">
+                {!music && (
+                    <div className="flex flex-col items-center justify-center gap-5 pb-20">
+                        {!music && !isLoading && (
                             <>
                                 <p className="font-noto text-20 font-semibold tracking-wide text-matteBlack">
-                                    Start a Conversation
+                                    Create some music!
                                 </p>
-                                <ThreeDotsBounce />
+                                <WaveAnimation className="mt-16" />
                             </>
                         )}
                     </div>
                 )}
                 {isLoading && <Loader />}
-                <div className="flex flex-col gap-y-4">
-                    {messages.map((message) => (
-                        <MessageContainer
-                            key={message.content}
-                            message={message.content}
-                            role={message.role}
-                        />
-                    ))}
-                </div>
+
+                {music && (
+                    <audio controls className="w-full mt-8">
+                        <source src={music} />
+                    </audio>
+                )}
             </div>
 
             <div className="mt-auto mb-5">
@@ -113,7 +87,7 @@ export default function ChatPage() {
                                         <Input
                                             className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2 placeholder:font-noto placeholder:text-14"
                                             disabled={isLoading}
-                                            placeholder="What is 10 times 10?"
+                                            placeholder="Guitar Rift"
                                             {...field}
                                         />
                                     </FormControl>

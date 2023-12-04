@@ -78,7 +78,7 @@ export const PricingInfo = () => {
                                         {tier.name}
                                     </h3>
                                     {tier.mostPopular ? (
-                                        <p className="rounded-full bg-matteBlack/70 px-2.5 py-1 text-xs font-semibold leading-5 text-creme font-noto">
+                                        <p className="rounded-full bg-matteBlack/70 px-2.5 py-1.5 text-xs font-semibold leading-5 text-creme font-noto">
                                             Most popular
                                         </p>
                                     ) : null}
@@ -104,7 +104,7 @@ export const PricingInfo = () => {
                                             className="flex gap-x-3"
                                         >
                                             <Check
-                                                className="h-6 w-5 flex-none text-violet-500"
+                                                className="h-6 w-5 flex-none text-matteBlack"
                                                 aria-hidden="true"
                                             />
                                             {feature}
@@ -117,9 +117,9 @@ export const PricingInfo = () => {
                                 aria-describedby={tier.id}
                                 className={clsx(
                                     tier.mostPopular
-                                        ? "bg-indigo-600 text-white shadow-sm hover:bg-indigo-500"
-                                        : "text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300",
-                                    "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                        ? "bg-matteBlack text-creme shadow-sm hover:bg-creme hover:text-matteBlack hover:ring-offset-matteBlack"
+                                        : "text-matteBlack ring-1 ring-inset ring-matteBlack/20 hover:ring-matteBlack/30",
+                                    "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matteBlack transition duration-200 ease-in-out"
                                 )}
                             >
                                 Buy plan

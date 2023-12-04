@@ -77,7 +77,7 @@ module.exports = {
                     },
                     "50%, 100%": {
                         transform: "scaleY(1)",
-                        background: "rgb(219, 39, 119)",
+                        background: "rgb(23, 23, 23)",
                     },
                 },
                 rotate: {
@@ -138,6 +138,23 @@ module.exports = {
                         transform: "translate(-50%, -50%) scale(1)",
                     },
                 },
+                wave: {
+                    "0%": {
+                        "box-shadow":
+                            "0 0 0 0 rgb(23, 23, 23, 0.3), 0 0 0 1em rgb(23, 23, 23, 0.3), 0 0 0 2em rgb(23, 23, 23, 0.3),0 0 0 3em rgb(23, 23, 23, 0.3)",
+                    },
+                    "100%": {
+                        "box-shadow":
+                            "0 0 0 1em rgb(23, 23, 23, 0.3), 0 0 0 2em rgb(23, 23, 23, 0.3), 0 0 0 3em rgb(23, 23, 23, 0.3), 0 0 0 4em rgba(219, 39, 119, 0)",
+                    },
+                },
+                propel: {
+                    "0%": { transform: "translateX(0)" },
+                    "20%": { transform: "translateX(25%)" },
+                    "40%": { transform: "translateX(-25%)" },
+                    "60%": { transform: "translateX(25%)" },
+                    "100%": { transform: "translateX(-25%)" },
+                },
             },
             animation: {
                 "circle-left": "circle-left 2s ease-in-out infinite",
@@ -148,8 +165,13 @@ module.exports = {
                 "square-fill": "square-fill 2s ease-in-out infinite",
                 "square-fill-in": "square-fill-in 2s ease-in-out infinite",
                 rotate: "rotate 1.5s linear infinite",
+                wave: "wave 1s linear infinite",
+                "arrow-forwarding": "propel 5s infinite",
             },
         },
     },
-    plugins: [require("tailwindcss-animation-delay")],
+    plugins: [
+        require("tailwindcss-animation-delay"),
+        require("tailwind-scrollbar-hide"),
+    ],
 };

@@ -11,8 +11,8 @@ import { Input } from "@/components/Input";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Loader } from "@/components/Loader";
-import { SquareRotatingFill } from "@/components/SquareRotatingFill";
+import { Loader } from "@/components/animations/Loader";
+import { SquareRotatingFill } from "@/components/animations/SquareRotatingFill";
 import {
     Select,
     SelectContent,
@@ -65,7 +65,7 @@ export default function ImagePage() {
                     Image Generation
                 </p>
             </div>
-            <div className="mt-20 overflow-y-scroll">
+            <div className="mt-20 overflow-y-scroll scrollbar-hide">
                 {images.length === 0 && (
                     <div className="flex flex-col items-center justify-center gap-5 pb-4">
                         {images.length === 0 && !isLoading && (
