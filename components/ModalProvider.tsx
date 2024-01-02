@@ -12,7 +12,11 @@ import {
 } from "@phosphor-icons/react";
 import clsx from "clsx";
 
-export const ModalProvider = () => {
+interface ModalProviderProps {
+    apiLimit: number;
+}
+
+export const ModalProvider = ({ apiLimit }: ModalProviderProps) => {
     const [isMounted, setIsMounted] = React.useState(false);
     const proModal = useProModal();
 
@@ -66,9 +70,11 @@ export const ModalProvider = () => {
 
                 <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl p-6">
                     <Dialog.Title className="flex flex-col gap-2">
-                        <p className="font-ysa font-semibold text-2xl text-center">
-                            You have used up all your free tokens!
-                        </p>
+                        {apiLimit >= 3 && (
+                            <p className="font-ysa font-semibold text-2xl text-center">
+                                You have used up all your free tokens!
+                            </p>
+                        )}
                         <p className="font-ysa font-semibold text-2xl text-center">
                             Upgrade to Pro Tier!
                         </p>

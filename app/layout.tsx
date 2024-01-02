@@ -51,7 +51,7 @@ export default async function RootLayout({
                         apiLimitCount={apiLimitCount}
                     />
                     <main className="mb-auto h-full min-h-[85vh]">
-                        <ModalProvider />
+                        <ModalProvider apiLimit={apiLimitCount} />
                         {children}
                     </main>
                     <Footer />
