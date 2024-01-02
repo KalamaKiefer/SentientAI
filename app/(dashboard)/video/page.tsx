@@ -14,10 +14,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Loader } from "@/components/animations/Loader";
 import Arrow from "@/components/animations/Arrow";
+import { useProModal } from "@/hooks/useProModal";
 
 export default function VideoPage() {
     const router = useRouter();
     const [video, setVideo] = React.useState<string>();
+    const proModal = useProModal();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -36,8 +38,10 @@ export default function VideoPage() {
 
             setVideo(response.data[0]);
             form.reset();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }

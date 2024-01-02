@@ -14,10 +14,12 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Loader } from "@/components/animations/Loader";
 import WaveAnimation from "@/components/animations/Wave";
+import { useProModal } from "@/hooks/useProModal";
 
 export default function MusicPage() {
     const router = useRouter();
     const [music, setMusic] = React.useState<string>();
+    const proModal = useProModal();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -36,8 +38,10 @@ export default function MusicPage() {
 
             setMusic(response.data.audio);
             form.reset();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }

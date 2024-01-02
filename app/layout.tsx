@@ -5,6 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import clsx from "clsx";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { getApiLimitCount } from "@/lib/api-limit";
+import { ModalProvider } from "@/components/modalProvider";
 
 const ysabeau = Ysabeau({
     variable: "--font-ysa",
@@ -27,11 +29,13 @@ export const metadata: Metadata = {
     description: "All purpose AI chatbot.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const apiLimitCount = await getApiLimitCount();
+
     return (
         <ClerkProvider>
             <html lang="en">
@@ -42,8 +46,12 @@ export default function RootLayout({
                         "flex flex-col h-screen justify-between"
                     )}
                 >
-                    <Header className="bg-transparent" />
+                    <Header
+                        className="bg-transparent"
+                        apiLimitCount={apiLimitCount}
+                    />
                     <main className="mb-auto h-full min-h-[85vh]">
+                        <ModalProvider />
                         {children}
                     </main>
                     <Footer />

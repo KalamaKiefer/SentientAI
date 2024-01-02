@@ -11,6 +11,7 @@ import {
     MusicNote,
     Gear,
     type Icon,
+    Lightning,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -19,6 +20,7 @@ import mobileLogo from "../public/assets/mobileLogo.png";
 import { motion, type AnimationProps, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import Link from "next/link";
+import { LimitCounter } from "./LimitCounter";
 
 const navigation: Array<{
     name: string;
@@ -55,11 +57,20 @@ const navigation: Array<{
         hoverColor: "group-hover:text-sky-600",
         color: "text-sky-600",
     },
+    {
+        name: "Settings",
+        href: "/settings",
+        icon: Gear,
+        hoverColor: "group-hover:text-sky-500",
+        color: "text-sky-500",
+    },
 ];
 
-export default function Header(
-    props: React.ComponentPropsWithoutRef<"header">
-) {
+interface HeaderProps extends React.ComponentPropsWithoutRef<"header"> {
+    apiLimitCount: number;
+}
+
+export default function Header({ apiLimitCount, ...props }: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const pathname = usePathname();
 
@@ -134,7 +145,7 @@ export default function Header(
                         );
                     })}
                 </div>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-6">
                     <UserButton
                         afterSignOutUrl="/"
                         appearance={{
@@ -145,9 +156,8 @@ export default function Header(
                             },
                         }}
                     />
-                    <Link href="/settings">
-                        <Gear className="w-10 h-10 xl:w-12 xl:h-12 ml-5 text-gray-600 opacity-50 hover:opacity-100 duration-300 ease-in-out" />
-                    </Link>
+
+                    <LimitCounter apiLimitCount={apiLimitCount} />
                 </div>
             </nav>
             <Dialog
@@ -168,7 +178,7 @@ export default function Header(
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-y-0 bg-white h-[500px] right-0 z-10 w-full px-6 py-6 sm:ring-1 sm:ring-gray-900/10"
+                        className="fixed inset-y-0 bg-white h-[550px] right-0 z-10 w-full px-6 py-6 sm:ring-1 sm:ring-gray-900/10"
                     >
                         <div className="flex items-center justify-between">
                             <a href="#" className="-m-1.5 p-1.5">
@@ -236,7 +246,7 @@ export default function Header(
                                         );
                                     })}
                                 </div>
-                                <div className="py-6 flex gap-x-3 items-center">
+                                <div className="py-6 flex flex-col items-start">
                                     <UserButton
                                         afterSignOutUrl="/"
                                         appearance={{
@@ -248,9 +258,9 @@ export default function Header(
                                             },
                                         }}
                                     />
-                                    <Link href="/settings">
-                                        <Gear className="w-11 h-11 text-gray-600" />
-                                    </Link>
+                                    <LimitCounter
+                                        apiLimitCount={apiLimitCount}
+                                    />
                                 </div>
                             </div>
                         </div>

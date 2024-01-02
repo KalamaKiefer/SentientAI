@@ -15,6 +15,7 @@ import React from "react";
 import { ThreeDotsBounce } from "@/components/animations/ThreeDotsBounce";
 import { MessageContainer } from "@/components/MessageContainer";
 import { Loader } from "@/components/animations/Loader";
+import { useProModal } from "@/hooks/useProModal";
 
 export default function ChatPage() {
     const router = useRouter();
@@ -22,6 +23,7 @@ export default function ChatPage() {
         OpenAI.Chat.Completions.ChatCompletionMessageParam[]
     >([]);
     const scrollRef = React.useRef<HTMLDivElement>(null);
+    const proModal = useProModal();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -48,14 +50,15 @@ export default function ChatPage() {
             setMessages((current) => [...current, userMessage, response.data]);
 
             form.reset();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }
 
         if (scrollRef.current) {
-            console.log("hello");
             scrollRef.current.scrollIntoView({
                 block: "end",
                 behavior: "smooth",

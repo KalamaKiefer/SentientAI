@@ -21,10 +21,12 @@ import {
     SelectValue,
 } from "@/components/Select";
 import Image from "next/image";
+import { useProModal } from "@/hooks/useProModal";
 
 export default function ImagePage() {
     const router = useRouter();
     const [images, setImages] = React.useState<Array<string>>([]);
+    const proModal = useProModal();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -50,8 +52,10 @@ export default function ImagePage() {
             setImages(urls);
 
             form.reset();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
         } finally {
             router.refresh();
         }
