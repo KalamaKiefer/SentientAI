@@ -16,6 +16,7 @@ import { ThreeDotsBounce } from "@/components/animations/ThreeDotsBounce";
 import { MessageContainer } from "@/components/MessageContainer";
 import { Loader } from "@/components/animations/Loader";
 import { useProModal } from "@/hooks/useProModal";
+import toast from "react-hot-toast";
 
 export default function ChatPage() {
     const router = useRouter();
@@ -53,6 +54,8 @@ export default function ChatPage() {
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 proModal.onOpen();
+            } else {
+                toast.error("Sorry! Something went wrong on our end!");
             }
         } finally {
             router.refresh();

@@ -68,9 +68,14 @@ const navigation: Array<{
 
 interface HeaderProps extends React.ComponentPropsWithoutRef<"header"> {
     apiLimitCount: number;
+    isPro: boolean;
 }
 
-export default function Header({ apiLimitCount, ...props }: HeaderProps) {
+export default function Header({
+    apiLimitCount,
+    isPro,
+    ...props
+}: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const pathname = usePathname();
 
@@ -157,7 +162,7 @@ export default function Header({ apiLimitCount, ...props }: HeaderProps) {
                         }}
                     />
 
-                    <LimitCounter apiLimitCount={apiLimitCount} />
+                    <LimitCounter apiLimitCount={apiLimitCount} isPro={isPro} />
                 </div>
             </nav>
             <Dialog
@@ -259,7 +264,9 @@ export default function Header({ apiLimitCount, ...props }: HeaderProps) {
                                         }}
                                     />
                                     <LimitCounter
+                                        closeMobileMenu={setMobileMenuOpen}
                                         apiLimitCount={apiLimitCount}
+                                        isPro={isPro}
                                     />
                                 </div>
                             </div>

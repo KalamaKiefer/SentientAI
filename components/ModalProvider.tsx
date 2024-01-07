@@ -11,6 +11,7 @@ import {
     VideoCamera,
 } from "@phosphor-icons/react";
 import clsx from "clsx";
+import axios from "axios";
 
 interface ModalProviderProps {
     apiLimit: number;
@@ -18,7 +19,22 @@ interface ModalProviderProps {
 
 export const ModalProvider = ({ apiLimit }: ModalProviderProps) => {
     const [isMounted, setIsMounted] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+
     const proModal = useProModal();
+
+    const onSubscribe = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get("/api/stripe");
+
+            window.location.href = response.data.url;
+        } catch (error: any) {
+            console.log(error, "STRIPE_CLIENT_ERROR");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     React.useEffect(() => {
         setIsMounted(true);
@@ -66,9 +82,9 @@ export const ModalProvider = ({ apiLimit }: ModalProviderProps) => {
     return (
         <Dialog.Root open={proModal.isOpen} onOpenChange={proModal.onClose}>
             <Dialog.Portal>
-                <Dialog.Overlay className="bg-creme/70 fixed inset-0" />
+                <Dialog.Overlay className="bg-matteBlack/50 fixed inset-0" />
 
-                <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl p-6">
+                <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl p-6 min-w-[18.75rem]">
                     <Dialog.Title className="flex flex-col gap-2">
                         {apiLimit >= 3 && (
                             <p className="font-ysa font-semibold text-2xl text-center">
@@ -109,7 +125,11 @@ export const ModalProvider = ({ apiLimit }: ModalProviderProps) => {
                                 );
                             })}
                         </div>
-                        <button className="flex items-center w-full border border-black py-2 px-6 rounded hover:bg-matteBlack hover:text-creme transition ease-in-out duration-300 mt-4 ring-0">
+                        <button
+                            className="flex items-center w-full border border-black py-2 px-6 rounded hover:bg-matteBlack hover:text-creme transition ease-in-out duration-300 mt-4 ring-0 justify-center"
+                            onClick={onSubscribe}
+                            disabled={loading}
+                        >
                             <p className="font-noto text-center">Upgrade!</p>
                             <Lightning className="w-6" />
                         </button>

@@ -8,9 +8,15 @@ import { useProModal } from "@/hooks/useProModal";
 
 export interface LimitCounterProps {
     apiLimitCount: number;
+    closeMobileMenu?: React.Dispatch<React.SetStateAction<boolean>>;
+    isPro: boolean;
 }
 
-export const LimitCounter = ({ apiLimitCount }: LimitCounterProps) => {
+export const LimitCounter = ({
+    apiLimitCount,
+    closeMobileMenu,
+    isPro,
+}: LimitCounterProps) => {
     const [mounted, setMounted] = React.useState(false);
     const [progress, setProgress] = React.useState(apiLimitCount);
     const proModal = useProModal();
@@ -23,7 +29,7 @@ export const LimitCounter = ({ apiLimitCount }: LimitCounterProps) => {
         return () => clearTimeout(timer);
     }, [apiLimitCount]);
 
-    if (!mounted) {
+    if (!mounted || isPro) {
         return null;
     }
 
@@ -87,7 +93,10 @@ export const LimitCounter = ({ apiLimitCount }: LimitCounterProps) => {
                 </Progress.Root>
                 <button
                     className="flex items-center mr-auto border border-black py-2 px-6 rounded mt-4"
-                    onClick={() => proModal.onOpen()}
+                    onClick={() => {
+                        if (closeMobileMenu) closeMobileMenu(false);
+                        proModal.onOpen();
+                    }}
                 >
                     <span className="font-noto">Upgrade!</span>
                     <Lightning className="w-6" />

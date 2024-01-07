@@ -22,11 +22,13 @@ import {
 } from "@/components/Select";
 import Image from "next/image";
 import { useProModal } from "@/hooks/useProModal";
+import toast from "react-hot-toast";
 
 export default function ImagePage() {
     const router = useRouter();
     const [images, setImages] = React.useState<Array<string>>([]);
     const proModal = useProModal();
+    const [languageError, setLanguageError] = React.useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -56,6 +58,12 @@ export default function ImagePage() {
             if (error?.response?.status === 403) {
                 proModal.onOpen();
             }
+
+            if (error?.response?.status === 400) {
+                setLanguageError(true);
+            } else {
+                toast.error("Sorry! Something went wrong on our end!");
+            }
         } finally {
             router.refresh();
         }
@@ -79,6 +87,14 @@ export default function ImagePage() {
                                 </p>
                                 <SquareRotatingFill className="mt-8" />
                             </>
+                        )}
+                        {languageError && (
+                            <p className="font-noto text-16">
+                                Your request was rejected as a result of our
+                                safety system. Your prompt may contain text that
+                                is not allowed by our safety system. Please try
+                                again.
+                            </p>
                         )}
                     </div>
                 )}

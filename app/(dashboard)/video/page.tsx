@@ -15,6 +15,7 @@ import React from "react";
 import { Loader } from "@/components/animations/Loader";
 import Arrow from "@/components/animations/Arrow";
 import { useProModal } from "@/hooks/useProModal";
+import toast from "react-hot-toast";
 
 export default function VideoPage() {
     const router = useRouter();
@@ -41,6 +42,8 @@ export default function VideoPage() {
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 proModal.onOpen();
+            } else {
+                toast.error("Sorry! Something went wrong on our end!");
             }
         } finally {
             router.refresh();

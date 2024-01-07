@@ -6,7 +6,9 @@ import clsx from "clsx";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getApiLimitCount } from "@/lib/api-limit";
-import { ModalProvider } from "@/components/modalProvider";
+import { ModalProvider } from "@/components/ModalProvider";
+import { validateSubscription } from "@/lib/subscription";
+import { ToasterProvider } from "@/components/ToasterProvider";
 
 const ysabeau = Ysabeau({
     variable: "--font-ysa",
@@ -35,6 +37,7 @@ export default async function RootLayout({
     children: React.ReactNode;
 }) {
     const apiLimitCount = await getApiLimitCount();
+    const isPro = await validateSubscription();
 
     return (
         <ClerkProvider>
@@ -49,9 +52,11 @@ export default async function RootLayout({
                     <Header
                         className="bg-transparent"
                         apiLimitCount={apiLimitCount}
+                        isPro={isPro}
                     />
                     <main className="mb-auto h-full min-h-[85vh]">
                         <ModalProvider apiLimit={apiLimitCount} />
+                        <ToasterProvider />
                         {children}
                     </main>
                     <Footer />
