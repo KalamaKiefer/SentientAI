@@ -16,6 +16,7 @@ const ysabeau = Ysabeau({
     display: "swap",
     weight: "variable",
     style: ["italic", "normal"],
+    adjustFontFallback: false,
 });
 
 const noto = Noto_Sans_HK({
