@@ -47,10 +47,10 @@ export const PricingInfo = () => {
                     </p>
                 </div>
                 <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300 font-noto">
-                    Sentient AI`&apos;`s pricing plans offer flexibility for
-                    every user. Choose from our free tier with 5 transactions,
-                    the $5 tier with 10 bonus coins, or the $15 tier for
-                    unlimited monthly tokens – ensuring innovation at your pace.
+                    Sentient AI&apos;s pricing plans offer flexibility for every
+                    user. Choose from our free tier with 5 transactions, the $5
+                    tier with 10 bonus coins, or the $15 tier for unlimited
+                    monthly tokens – ensuring innovation at your pace.
                 </p>
                 <div className="isolate mx-auto mt-16 grid max-w-md gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {tiers.map((tier, tierIdx) => (

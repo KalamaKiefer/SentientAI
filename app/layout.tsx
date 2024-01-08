@@ -43,11 +43,7 @@ export default async function RootLayout({
         <ClerkProvider>
             <html lang="en">
                 <body
-                    className={clsx(
-                        ysabeau.variable,
-                        noto.variable,
-                        "flex flex-col h-screen justify-between"
-                    )}
+                    className={`flex flex-col h-screen justify-between ${ysabeau.variable} ${noto.variable}`}
                 >
                     <Header
                         className="bg-transparent"
