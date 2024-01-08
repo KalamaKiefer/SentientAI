@@ -186,7 +186,7 @@ export default function Header({
                         className="fixed inset-y-0 bg-white h-[550px] right-0 z-10 w-full px-6 py-6 sm:ring-1 sm:ring-gray-900/10"
                     >
                         <div className="flex items-center justify-between">
-                            <a href="#" className="-m-1.5 p-1.5">
+                            <a href="/dashboard" className="-m-1.5 p-1.5">
                                 <Image
                                     src={mobileLogo}
                                     alt=""

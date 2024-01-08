@@ -77,7 +77,7 @@ export default function ImagePage() {
                     Image Generation
                 </p>
             </div>
-            <div className="mt-20 overflow-y-scroll scrollbar-hide">
+            <div className="mt-4 overflow-y-scroll scrollbar-hide">
                 {images.length === 0 && (
                     <div className="flex flex-col items-center justify-center gap-5 pb-4">
                         {images.length === 0 && !isLoading && (
