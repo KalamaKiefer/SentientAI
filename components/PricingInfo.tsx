@@ -15,22 +15,22 @@ const tiers = [
         mostPopular: false,
     },
     {
-        name: "Adventurer",
+        name: "Adventurer (Coming Soon)",
         id: "tier-adventurer",
         href: "/sign-up",
         priceMonthly: "$5",
         description: "Elevate Your Experience – 10 Bonus Coins Monthly",
         features: ["10 bonus tokens monthly."],
-        mostPopular: true,
+        mostPopular: false,
     },
     {
         name: "Astronaut",
         id: "tier-astronaut",
         href: "/sign-up",
-        priceMonthly: "$15",
+        priceMonthly: "$20",
         description: "Unlimited Inspiration – Endless Tokens Monthly",
         features: ["Unlimited tokens every month."],
-        mostPopular: false,
+        mostPopular: true,
     },
 ];
 
@@ -122,7 +122,7 @@ export const PricingInfo = () => {
                                     "mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matteBlack transition duration-200 ease-in-out"
                                 )}
                             >
-                                Buy plan
+                                Learn More
                             </a>
                         </div>
                     ))}
