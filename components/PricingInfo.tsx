@@ -15,15 +15,6 @@ const tiers = [
         mostPopular: false,
     },
     {
-        name: "Adventurer (Coming Soon)",
-        id: "tier-adventurer",
-        href: "/sign-up",
-        priceMonthly: "$5",
-        description: "Elevate Your Experience – 10 Bonus Coins Monthly",
-        features: ["10 bonus tokens monthly."],
-        mostPopular: false,
-    },
-    {
         name: "Astronaut",
         id: "tier-astronaut",
         href: "/sign-up",
@@ -31,6 +22,15 @@ const tiers = [
         description: "Unlimited Inspiration – Endless Tokens Monthly",
         features: ["Unlimited tokens every month."],
         mostPopular: true,
+    },
+    {
+        name: "Adventurer (Coming Soon)",
+        id: "tier-adventurer",
+        href: "/sign-up",
+        priceMonthly: "$5",
+        description: "Elevate Your Experience – 10 Bonus Coins Monthly",
+        features: ["10 bonus tokens monthly."],
+        mostPopular: false,
     },
 ];
 
