@@ -15,7 +15,7 @@ const Footer = () => {
     const footerNav = {
         main: [
             { name: "Dashboard", href: "/dashboard" },
-            { name: "Contact", href: "/contact" },
+            { name: "Chat", href: "/chat" },
             { name: "Settings", href: "/settings" },
         ],
         social: [
