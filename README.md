@@ -3,7 +3,7 @@
 
 Welcome to **Sentient** – a cutting-edge web application that leverages **AI** to generate text, images, videos, and music. Built with **React**, **TypeScript**, and **Next.js**, this app lets you tap into the power of machine learning APIs from **Replicate** and **OpenAI**. 
 
-With a **Stripe** integration for subscription management, **Clerk** for authentication, **Zustand** for state management, and **Prisma** for managing relational data with **MySQL**, Sentient offers an advanced and seamless user experience.
+With a **Stripe** integration for subscription management, **Clerk** for authentication, **Zustand** for state management, and **Prisma** for managing relational data with **PostgresSQL**, Sentient offers an advanced and seamless user experience.
 
 ## 🚀 Features
 
@@ -14,7 +14,7 @@ With a **Stripe** integration for subscription management, **Clerk** for authent
 - **AI Models**: Generate content in various formats, from creative writing to visuals and media.
 - **User Authentication**: Secure sign-up and login with **Clerk**.
 - **State Management**: Manage application state efficiently with **Zustand**.
-- **Database Management**: Use **Prisma ORM** to interact with a **MySQL** database hosted on **PlanetScale**.
+- **Database Management**: Use **Prisma ORM** to interact with a **PostgresSQL** database hosted on **Neon**.
 - **Type Safety**: Ensured by **Zod**, preventing errors with runtime validation and type-safe schemas.
 
 ## 🛠️ Technologies Used
@@ -27,7 +27,7 @@ With a **Stripe** integration for subscription management, **Clerk** for authent
 - **OpenAI**: AI-powered text and image generation API.
 - **Stripe**: Payment gateway to manage subscriptions and pro accounts.
 - **Prisma**: ORM for managing MySQL database interactions.
-- **MySQL**: Relational database hosted on **PlanetScale** for scalable storage.
+- **Neon** – Serverless PostgreSQL database (free tier)
 - **Clerk**: Authentication and user management for secure sign-ups and logins.
 - **Zustand**: A small, fast state management library for React.
 - **Zod**: Type-safe schema validation for input handling.
@@ -71,11 +71,13 @@ To start the production server:
 npm run start
 ```
 
-## 💻 Setting Up Prisma and Database
+## 💻 Setting Up Prisma and Database (Neon + PostgreSQL)
 
-1. Set up a **PlanetScale** MySQL database.
-2. Configure the **Prisma** schema file to connect to your PlanetScale database.
-3. Run the following to generate your Prisma client:
+1. Set up a **Neon** PostgreSQL database.
+2. Copy the Prisma connection string from Neon and set it in your .env file:
+3. Change the provider in schema.prisma to: provider = "postgresql"
+4. Run Prisma migrations to set up your schema: npx prisma migrate dev --name init
+5. Run the following to generate your Prisma client:
 
 ```bash
 npm run postinstall
