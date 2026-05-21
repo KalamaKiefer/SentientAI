@@ -47,7 +47,6 @@ export async function POST(req: Request) {
             return new NextResponse("Free trial has expired", { status: 403 });
 
         const response = await openai.images.generate({
-            model: "dall-e-2",
             prompt,
             n: parseInt(amountOptions, 10),
             size: resolution,
