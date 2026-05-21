@@ -5,7 +5,7 @@ import { z } from "zod";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BoundedBox } from "@/components/BoundedBox";
-import { MusicNote, VideoCamera } from "@phosphor-icons/react";
+import { MusicNote } from "@phosphor-icons/react";
 import { Form, FormControl, FormField, FormItem } from "@/components/Form";
 import { Input } from "@/components/Input";
 import axios from "axios";

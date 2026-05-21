@@ -6,7 +6,6 @@ import {
     Chat,
     type Icon,
     Images,
-    VideoCamera,
     MusicNotes,
 } from "@phosphor-icons/react";
 import { BoundedBox } from "./BoundedBox";
@@ -30,12 +29,6 @@ const LandingPromotion = () => {
             description:
                 "Turn ideas into captivating visuals with our AI image creation tool. Effortlessly bring imagination to life, from stunning designs to captivating graphics.",
             icon: Images,
-        },
-        {
-            name: "Video Generation",
-            description:
-                "Transform concepts into dynamic videos using our AI video generation feature. Craft professional-quality content for marketing, social media, and more.",
-            icon: VideoCamera,
         },
         {
             name: "Music Generation",
@@ -69,7 +62,7 @@ const LandingPromotion = () => {
                         <p className="mt-6 text-lg leading-8 text-gray-300">
                             Embrace a new frontier of creativity and innovation.
                             Our AI-powered platform offers dynamic chatbot
-                            interactions, stunning image, video generation, and
+                            interactions, stunning image generation, and
                             inspiring music composition. Unleash your
                             imagination and redefine possibilities with Sentient
                             AI.

@@ -28,20 +28,23 @@ export async function POST(req: Request) {
         if (!freeTrial && !isPro)
             return new NextResponse("Free trial has expired", { status: 403 });
 
-        const response = await replicate.run(
-            "riffusion/riffusion:8cf61ea6c56afd61d8f5b9ffd14d7c216c0a93844ce2d82ac1c9ecc9c7f24e05",
+        const audioUrl = await replicate.run(
+            "meta/musicgen:671ac645ce5e552cc63a54a2bbff63fcf798043692f1600a5ee97e7b0a2cd2e",
             {
                 input: {
-                    prompt_a: prompt,
+                    prompt,
+                    model_version: "stereo-large",
+                    duration: 8,
                 },
             }
         );
 
         if (!isPro) await increaseApiLimit();
 
-        return NextResponse.json(response);
-    } catch (error) {
-        console.log("[MUSIC_ERROR]", error);
+        return NextResponse.json({ audio: audioUrl });
+    } catch (error: any) {
+        console.log("[MUSIC_ERROR]", error?.message);
+        if (error?.message?.includes("billing")) return new NextResponse("Replicate billing issue", { status: 402 });
         return new NextResponse("Internal Error", { status: 500 });
     }
 }

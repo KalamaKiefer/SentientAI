@@ -47,6 +47,7 @@ export async function POST(req: Request) {
             return new NextResponse("Free trial has expired", { status: 403 });
 
         const response = await openai.images.generate({
+            model: "dall-e-2",
             prompt,
             n: parseInt(amountOptions, 10),
             size: resolution,
@@ -55,8 +56,11 @@ export async function POST(req: Request) {
         if (!isPro) await increaseApiLimit();
 
         return NextResponse.json(response.data);
-    } catch (error) {
-        console.log("[IMAGE_ERROR]", error);
+    } catch (error: any) {
+        console.log("[IMAGE_ERROR]", error?.status, error?.message);
+        if (error?.status === 401) return new NextResponse("Invalid OpenAI API key", { status: 500 });
+        if (error?.status === 429) return new NextResponse("OpenAI quota exceeded", { status: 429 });
+        if (error?.status === 400) return new NextResponse(error?.message ?? "Invalid request", { status: 400 });
         return new NextResponse("Internal Error", { status: 500 });
     }
 }

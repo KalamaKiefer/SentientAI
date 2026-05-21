@@ -2,7 +2,6 @@
 import {
     Chat,
     type Icon,
-    VideoCamera,
     Images,
     MusicNote,
 } from "@phosphor-icons/react";
@@ -18,7 +17,6 @@ export const QuickLinks = () => {
     const quickLinks: Array<LinkProps> = [
         { title: "Chat", link: "/chat", icon: Chat },
         { title: "Image", link: "/image-generation", icon: Images },
-        { title: "Video", link: "/video", icon: VideoCamera },
         { title: "Music", link: "/music", icon: MusicNote },
     ];
 

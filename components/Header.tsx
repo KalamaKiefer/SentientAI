@@ -6,7 +6,6 @@ import {
     Planet,
     X,
     Chat,
-    VideoCamera,
     Images,
     MusicNote,
     Gear,
@@ -42,13 +41,6 @@ const navigation: Array<{
         icon: Images,
         hoverColor: "group-hover:text-sky-800",
         color: "text-sky-800",
-    },
-    {
-        name: "Video",
-        href: "/video",
-        icon: VideoCamera,
-        hoverColor: "group-hover:text-sky-700",
-        color: "text-sky-700",
     },
     {
         name: "Music",

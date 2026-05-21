@@ -35,15 +35,17 @@ export async function POST(req: Request) {
             return new NextResponse("Free trial has expired", { status: 403 });
 
         const response = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o-mini",
             messages,
         });
 
         if (!isPro) await increaseApiLimit();
 
         return NextResponse.json(response.choices[0].message);
-    } catch (error) {
-        console.log("[CONVERSATION_ERROR]", error);
+    } catch (error: any) {
+        console.log("[CHAT_ERROR]", error?.status, error?.message);
+        if (error?.status === 401) return new NextResponse("Invalid OpenAI API key", { status: 500 });
+        if (error?.status === 429) return new NextResponse("OpenAI quota exceeded", { status: 429 });
         return new NextResponse("Internal Error", { status: 500 });
     }
 }

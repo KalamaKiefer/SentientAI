@@ -8,7 +8,6 @@ import {
     Images,
     Lightning,
     MusicNote,
-    VideoCamera,
 } from "@phosphor-icons/react";
 import clsx from "clsx";
 import axios from "axios";
@@ -60,13 +59,6 @@ export const ModalProvider = ({ apiLimit }: ModalProviderProps) => {
             icon: Images,
             hoverColor: "group-hover:text-sky-800",
             color: "text-sky-900",
-        },
-        {
-            name: "Video",
-            href: "/video",
-            icon: VideoCamera,
-            hoverColor: "group-hover:text-sky-700",
-            color: "text-green-900",
         },
         {
             name: "Music",
