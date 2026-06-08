@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { amountOptions, formSchema, resolutionOptions } from "./constants";
+import { formSchema, resolutionOptions } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BoundedBox } from "@/components/BoundedBox";
 import { Download, Image as ImageIcon } from "@phosphor-icons/react";
@@ -20,13 +20,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/Select";
-import Image from "next/image";
 import { useProModal } from "@/hooks/useProModal";
 import toast from "react-hot-toast";
 
 export default function ImagePage() {
     const router = useRouter();
     const [images, setImages] = React.useState<Array<string>>([]);
+    const [usedPrompt, setUsedPrompt] = React.useState("");
     const proModal = useProModal();
     const [languageError, setLanguageError] = React.useState(false);
 
@@ -34,8 +34,7 @@ export default function ImagePage() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             prompt: "",
-            amountOptions: "1",
-            resolution: "512x512",
+            resolution: "1024x1024",
         },
     });
 
@@ -44,6 +43,7 @@ export default function ImagePage() {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             setImages([]);
+            setLanguageError(false);
 
             const response = await axios.post("/api/image-generation", values);
 
@@ -51,16 +51,20 @@ export default function ImagePage() {
                 (image: { url: string }) => image.url
             );
 
+            setUsedPrompt(values.prompt);
             setImages(urls);
 
             form.reset();
         } catch (error: any) {
             if (error?.response?.status === 403) {
                 proModal.onOpen();
-            }
-
-            if (error?.response?.status === 400) {
-                setLanguageError(true);
+            } else if (error?.response?.status === 400) {
+                const msg: string = error?.response?.data ?? "";
+                if (msg.toLowerCase().includes("safety") || msg.toLowerCase().includes("content policy")) {
+                    setLanguageError(true);
+                } else {
+                    toast.error("Image generation failed. Try adjusting your prompt or settings.");
+                }
             } else {
                 toast.error("Sorry! Something went wrong on our end!");
             }
@@ -101,25 +105,30 @@ export default function ImagePage() {
                 {isLoading && <Loader />}
 
                 {images.length > 0 && (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-                        {images.map((image) => (
-                            <div key={image} className="flex flex-col">
-                                <div className="relative aspect-square">
-                                    <Image
-                                        alt="Generated Image"
-                                        fill
-                                        src={image}
-                                    />
+                    <div className="mt-8">
+                        <p className="font-noto text-14 text-gray-500 italic mb-4">
+                            &ldquo;{usedPrompt}&rdquo;
+                        </p>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {images.map((image) => (
+                                <div key={image} className="flex flex-col">
+                                    <div className="relative aspect-square">
+                                        <img
+                                            alt="Generated Image"
+                                            src={image}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <button
+                                        className="flex w-full items-center justify-center border border-matteBlack py-1.5 mt-3 gap-3"
+                                        onClick={() => window.open(image)}
+                                    >
+                                        <span>Download</span>
+                                        <Download className="h-6 w-6 mr-2" />
+                                    </button>
                                 </div>
-                                <button
-                                    className="flex w-full items-center justify-center border border-matteBlack py-1.5 mt-3 gap-3"
-                                    onClick={() => window.open(image)}
-                                >
-                                    <span>Download</span>
-                                    <Download className="h-6 w-6 mr-2" />
-                                </button>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
@@ -128,12 +137,12 @@ export default function ImagePage() {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 lg:grid-cols-10 gap-4"
+                        className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-4"
                     >
                         <FormField
                             name="prompt"
                             render={({ field }) => (
-                                <FormItem className="col-span-full lg:col-span-10">
+                                <FormItem className="col-span-full lg:col-span-8">
                                     <FormControl className="m-0 p-0">
                                         <Input
                                             className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent pl-2 placeholder:font-noto placeholder:text-14"
@@ -142,39 +151,6 @@ export default function ImagePage() {
                                             {...field}
                                         />
                                     </FormControl>
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="amountOptions"
-                            render={({ field }) => (
-                                <FormItem className="col-span-12 lg:col-span-2">
-                                    <Select
-                                        disabled={isLoading}
-                                        onValueChange={field.onChange}
-                                        value={field.value}
-                                        defaultValue={field.value}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue
-                                                    defaultValue={field.value}
-                                                />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {amountOptions.map((option) => (
-                                                <SelectItem
-                                                    key={option.value}
-                                                    value={option.value}
-                                                >
-                                                    {option.label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
                                 </FormItem>
                             )}
                         />
@@ -210,9 +186,8 @@ export default function ImagePage() {
                                 </FormItem>
                             )}
                         />
-
                         <button
-                            className="col-span-full lg:col-span-6 px-6 py-1.5 bg-matteBlack text-creme hover:bg-creme hover:text-matteBlack duration-200 ease-in-out transition rounded-lg font-ysa text-18"
+                            className="col-span-full lg:col-span-2 px-6 py-1.5 bg-matteBlack text-creme hover:bg-creme hover:text-matteBlack duration-200 ease-in-out transition rounded-lg font-ysa text-18"
                             disabled={isLoading}
                         >
                             Create

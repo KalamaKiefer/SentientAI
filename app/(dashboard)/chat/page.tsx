@@ -121,11 +121,11 @@ export default function ChatPage() {
         )}
         {isLoading && <Loader />}
         <div className="flex flex-col gap-y-4">
-          {messages.map((message) => (
+          {messages.map((message, index) => (
             <MessageContainer
-              key={message.content}
-              message={message.content}
-              role={message.role}
+              key={index}
+              message={typeof message.content === "string" ? message.content : null}
+              role={message.role as "user" | "assistant" | "system" | "function"}
             />
           ))}
         </div>
